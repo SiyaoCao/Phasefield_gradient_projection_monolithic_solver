@@ -39,4 +39,4 @@ Once the deal.II library is compiled, for instance, to "~/dealii-dev/bin/", foll
 4. For 3D test cases, run via ../../main 3
 
 ### How to cite this work:
-TBD
+https://www.sciencedirect.com/science/article/pii/S0045782524008764
