@@ -2356,8 +2356,10 @@ namespace PhaseField
 	  {
 	    for (const auto &cell : m_triangulation.active_cell_iterators())
 	      {
-		if (    (cell->center()[0] > 0.45)
-		     && (cell->center()[1] < 0.55) )
+		if (   (   (cell->center()[0] > 0.475)
+		        && (cell->center()[1] < 0.525) )
+		    //|| (    cell->center()[1] > 0.975)
+		   )
 		  {
 		    material_id = cell->material_id();
 		    length_scale = m_material_data[material_id][2];
@@ -2379,8 +2381,12 @@ namespace PhaseField
 	    initiation_point_refine_unfinished = false;
 	    for (const auto &cell : m_triangulation.active_cell_iterators())
 	      {
-		if (    std::fabs(cell->center()[0] - 0.5) < 0.025
-		     && cell->center()[1] < 0.5 && cell->center()[1] > 0.475 )
+		if (   (   std::fabs(cell->center()[0] - 0.5) < 0.025
+		        && cell->center()[1] < 0.5 && cell->center()[1] > 0.475 )
+		    // we also need to refine the top edge, since there might be a conflict between
+		    // inhomogeneous boundary conditions and the hanging-node constraints at the
+		    // top edge
+		    || (   cell->center()[1] > 0.975 ) )
 		  {
 		    material_id = cell->material_id();
 		    length_scale = m_material_data[material_id][2];
@@ -2947,8 +2953,9 @@ namespace PhaseField
 	  {
 	    for (const auto &cell : m_triangulation.active_cell_iterators())
 	      {
-		if (    (std::fabs(cell->center()[1] - 250.0) < 10.0)
-		     && (cell->center()[0] < 250.0) )
+		if (    (cell->center()[1] > 242.0)
+		     && (cell->center()[1] < 312.5)
+		     && (cell->center()[0] < 258.0) )
 		  {
 		    material_id = cell->material_id();
 		    length_scale = m_material_data[material_id][2];
@@ -3297,6 +3304,11 @@ namespace PhaseField
   void PhaseFieldMonolithicSolve<dim>::make_constraints(const unsigned int it_nr)
   {
     const bool apply_dirichlet_bc = (it_nr == 0);
+
+    if (it_nr > 1)
+      {
+        return;
+      }
 
     if (apply_dirichlet_bc)
       {
@@ -4911,6 +4923,9 @@ namespace PhaseField
 		m_logfile << std::endl;
               }
 
+            m_logfile << "\t\tThe current L-BFGS-B step converges in "
+        	      << LBFGS_iteration
+        	      << " iterations." << std::endl;
             m_logfile << "\t\tNumber of active lower bounds not changed." << std::endl;
     	    m_logfile << "\t\tNumber of active upper bounds not changed." << std::endl;
     	    m_logfile << "\t\tNumber of active lower-upper bounds not changed." << std::endl;
