@@ -128,7 +128,7 @@ namespace PhaseField
 	       const BlockVector<double> & src) const;
 
   private:
-    const SmartPointer<const BlockSparseMatrix<double> > m_system_matrix;
+    const ObserverPointer<const BlockSparseMatrix<double> > m_system_matrix;
   };
 
   usr_Jacobi_preconditioner::usr_Jacobi_preconditioner(const BlockSparseMatrix<double> & S)
@@ -154,7 +154,7 @@ namespace PhaseField
 	       const BlockVector<double> & src) const;
 
   private:
-    const SmartPointer<const SparseDirectUMFPACK > m_matrix_LU;
+    const ObserverPointer<const SparseDirectUMFPACK > m_matrix_LU;
   };
 
   usr_sparseLU_preconditioner::usr_sparseLU_preconditioner(const SparseDirectUMFPACK & matrix_factorization)
@@ -178,8 +178,8 @@ namespace PhaseField
 	     const BlockVector<double> & src) const;
 
   private:
-    const SmartPointer<const SparseILU<double> > m_ILU_factorization_disp;
-    const SmartPointer<const SparseILU<double> > m_ILU_factorization_phasefield;
+    const ObserverPointer<const SparseILU<double> > m_ILU_factorization_disp;
+    const ObserverPointer<const SparseILU<double> > m_ILU_factorization_phasefield;
   };
 
   usr_sparseILU_preconditioner::usr_sparseILU_preconditioner(const SparseILU<double> & ILU_factorization_disp,
