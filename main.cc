@@ -251,6 +251,7 @@ namespace PhaseField
       unsigned int m_scenario;
       std::string m_logfile_name;
       bool m_output_iteration_history;
+      bool m_plane_stress;
       std::string m_type_nonlinear_solver;
       std::string m_type_linear_solver;
       std::string m_type_preconditioner;
@@ -289,6 +290,11 @@ namespace PhaseField
 			  "yes",
                           Patterns::Selection("yes|no"),
 			  "Shall we write iteration history to the log file?");
+
+        prm.declare_entry("Plane stress",
+			  "no",
+			  Patterns::Selection("yes|no"),
+			  "If it is 2D, is it plane-stress?");
 
         prm.declare_entry("Nonlinear solver type",
                           "LBFGSB",
@@ -377,6 +383,7 @@ namespace PhaseField
         m_scenario = prm.get_integer("Scenario number");
         m_logfile_name = prm.get("Log file name");
         m_output_iteration_history = prm.get_bool("Output iteration history");
+        m_plane_stress = prm.get_bool("Plane stress");
         m_type_nonlinear_solver = prm.get("Nonlinear solver type");
         m_type_linear_solver = prm.get("Linear solver type");
         m_type_preconditioner = prm.get("Preconditioner type for CG");
@@ -691,13 +698,15 @@ namespace PhaseField
 				           const double residual_k,
 					   const double length_scale,
 					   const double viscosity,
-					   const double gc)
+					   const double gc,
+					   const bool   plane_stress_flag)
       : m_lame_lambda(lame_lambda)
       , m_lame_mu(lame_mu)
       , m_residual_k(residual_k)
       , m_length_scale(length_scale)
       , m_eta(viscosity)
       , m_gc(gc)
+      , m_plane_stress(plane_stress_flag)
       , m_phase_field_value(0.0)
       , m_grad_phasefield(Tensor<1, dim>())
       , m_strain(SymmetricTensor<2, dim>())
@@ -763,68 +772,7 @@ namespace PhaseField
 			      const double phase_field_value,
 			      const Tensor<1, dim> & grad_phasefield,
 			      const double phase_field_value_previous_step,
-			      const double delta_time)
-    {
-      m_strain = strain;
-      m_phase_field_value = phase_field_value;
-      m_grad_phasefield = grad_phasefield;
-      Vector<double>              eigenvalues(dim);
-      std::vector<Tensor<1, dim>> eigenvectors(dim);
-      usr_spectrum_decomposition::spectrum_decomposition<dim>(m_strain,
-    							      eigenvalues,
-    							      eigenvectors);
-
-      SymmetricTensor<2, dim> strain_positive, strain_negative;
-      strain_positive = usr_spectrum_decomposition::positive_tensor(eigenvalues, eigenvectors);
-      strain_negative = usr_spectrum_decomposition::negative_tensor(eigenvalues, eigenvectors);
-
-      SymmetricTensor<4, dim> projector_positive, projector_negative;
-      usr_spectrum_decomposition::positive_negative_projectors(eigenvalues,
-    							       eigenvectors,
-							       projector_positive,
-							       projector_negative);
-
-      SymmetricTensor<2, dim> stress_positive, stress_negative;
-      const double degradation = degradation_function(m_phase_field_value) + m_residual_k;
-      const double I_1 = trace(m_strain);
-      stress_positive = m_lame_lambda * usr_spectrum_decomposition::positive_ramp_function(I_1)
-                                      * Physics::Elasticity::StandardTensors<dim>::I
-                      + 2 * m_lame_mu * strain_positive;
-      stress_negative = m_lame_lambda * usr_spectrum_decomposition::negative_ramp_function(I_1)
-                                      * Physics::Elasticity::StandardTensors<dim>::I
-      		      + 2 * m_lame_mu * strain_negative;
-
-      m_stress = degradation * stress_positive + stress_negative;
-      m_stress_positive = stress_positive;
-
-      SymmetricTensor<4, dim> C_positive, C_negative;
-      C_positive = m_lame_lambda * usr_spectrum_decomposition::heaviside_function(I_1)
-                                 * Physics::Elasticity::StandardTensors<dim>::IxI
-		 + 2 * m_lame_mu * projector_positive;
-      C_negative = m_lame_lambda * usr_spectrum_decomposition::heaviside_function(-I_1)
-                                 * Physics::Elasticity::StandardTensors<dim>::IxI
-      		 + 2 * m_lame_mu * projector_negative;
-      m_mechanical_C = degradation * C_positive + C_negative;
-
-      m_strain_energy_positive = 0.5 * m_lame_lambda * usr_spectrum_decomposition::positive_ramp_function(I_1)
-                                                     * usr_spectrum_decomposition::positive_ramp_function(I_1)
-                               + m_lame_mu * strain_positive * strain_positive;
-
-      m_strain_energy_negative = 0.5 * m_lame_lambda * usr_spectrum_decomposition::negative_ramp_function(I_1)
-                                                     * usr_spectrum_decomposition::negative_ramp_function(I_1)
-                               + m_lame_mu * strain_negative * strain_negative;
-
-      m_strain_energy_total = degradation * m_strain_energy_positive + m_strain_energy_negative;
-
-      m_crack_energy_dissipation = m_gc * (  0.5 / m_length_scale * m_phase_field_value * m_phase_field_value
-	                                   + 0.5 * m_length_scale * m_grad_phasefield * m_grad_phasefield)
-	                                   // the term due to viscosity regularization
-	                                   + (m_phase_field_value - phase_field_value_previous_step)
-					   * (m_phase_field_value - phase_field_value_previous_step)
-				           * 0.5 * m_eta / delta_time;
-      //(void)delta_time;
-      //(void)phase_field_value_previous_step;
-    }
+			      const double delta_time);
 
   private:
     const double m_lame_lambda;
@@ -833,6 +781,7 @@ namespace PhaseField
     const double m_length_scale;
     const double m_eta;
     const double m_gc;
+    const bool   m_plane_stress;
     double m_phase_field_value;
     Tensor<1, dim> m_grad_phasefield;
     SymmetricTensor<2, dim> m_strain;
@@ -845,6 +794,83 @@ namespace PhaseField
     double m_crack_energy_dissipation;
   };
 
+  template <int dim>
+  void LinearIsotropicElasticityAdditiveSplit<dim>::
+   update_material_data(const SymmetricTensor<2, dim> & strain,
+			const double phase_field_value,
+			const Tensor<1, dim> & grad_phasefield,
+			const double phase_field_value_previous_step,
+			const double delta_time)
+  {
+    m_strain = strain;
+    m_phase_field_value = phase_field_value;
+    m_grad_phasefield = grad_phasefield;
+    Vector<double>              eigenvalues(dim);
+    std::vector<Tensor<1, dim>> eigenvectors(dim);
+    usr_spectrum_decomposition::spectrum_decomposition<dim>(m_strain,
+  							      eigenvalues,
+  							      eigenvectors);
+
+    SymmetricTensor<2, dim> strain_positive, strain_negative;
+    strain_positive = usr_spectrum_decomposition::positive_tensor(eigenvalues, eigenvectors);
+    strain_negative = usr_spectrum_decomposition::negative_tensor(eigenvalues, eigenvectors);
+
+    SymmetricTensor<4, dim> projector_positive, projector_negative;
+    usr_spectrum_decomposition::positive_negative_projectors(eigenvalues,
+  							       eigenvectors,
+							       projector_positive,
+							       projector_negative);
+
+    SymmetricTensor<2, dim> stress_positive, stress_negative;
+    const double degradation = degradation_function(m_phase_field_value) + m_residual_k;
+    const double I_1 = trace(m_strain);
+
+    // 2D plane strain and 3D cases
+    double my_lambda = m_lame_lambda;
+
+    // 2D plane stress case
+    if (    dim == 2
+	   && m_plane_stress)
+      my_lambda = 2 * m_lame_mu * m_lame_lambda / (m_lame_lambda + 2 * m_lame_mu);
+
+    stress_positive = my_lambda * usr_spectrum_decomposition::positive_ramp_function(I_1)
+                                    * Physics::Elasticity::StandardTensors<dim>::I
+                    + 2 * m_lame_mu * strain_positive;
+    stress_negative = my_lambda * usr_spectrum_decomposition::negative_ramp_function(I_1)
+                                    * Physics::Elasticity::StandardTensors<dim>::I
+    		      + 2 * m_lame_mu * strain_negative;
+
+    m_stress = degradation * stress_positive + stress_negative;
+    m_stress_positive = stress_positive;
+
+    SymmetricTensor<4, dim> C_positive, C_negative;
+    C_positive = my_lambda * usr_spectrum_decomposition::heaviside_function(I_1)
+                               * Physics::Elasticity::StandardTensors<dim>::IxI
+		 + 2 * m_lame_mu * projector_positive;
+    C_negative = my_lambda * usr_spectrum_decomposition::heaviside_function(-I_1)
+                               * Physics::Elasticity::StandardTensors<dim>::IxI
+    		 + 2 * m_lame_mu * projector_negative;
+    m_mechanical_C = degradation * C_positive + C_negative;
+
+    m_strain_energy_positive = 0.5 * my_lambda * usr_spectrum_decomposition::positive_ramp_function(I_1)
+                                                   * usr_spectrum_decomposition::positive_ramp_function(I_1)
+                             + m_lame_mu * strain_positive * strain_positive;
+
+    m_strain_energy_negative = 0.5 * my_lambda * usr_spectrum_decomposition::negative_ramp_function(I_1)
+                                                   * usr_spectrum_decomposition::negative_ramp_function(I_1)
+                             + m_lame_mu * strain_negative * strain_negative;
+
+    m_strain_energy_total = degradation * m_strain_energy_positive + m_strain_energy_negative;
+
+    m_crack_energy_dissipation = m_gc * (  0.5 / m_length_scale * m_phase_field_value * m_phase_field_value
+	                                   + 0.5 * m_length_scale * m_grad_phasefield * m_grad_phasefield)
+	                                   // the term due to viscosity regularization
+	                                   + (m_phase_field_value - phase_field_value_previous_step)
+					   * (m_phase_field_value - phase_field_value_previous_step)
+				           * 0.5 * m_eta / delta_time;
+    //(void)delta_time;
+    //(void)phase_field_value_previous_step;
+  }
 
   template <int dim>
   class PointHistory
@@ -863,7 +889,8 @@ namespace PhaseField
 		   const double length_scale,
 		   const double gc,
 		   const double viscosity,
-		   const double residual_k)
+		   const double residual_k,
+		   const bool   plane_stress_flag)
     {
       m_material =
               std::make_shared<LinearIsotropicElasticityAdditiveSplit<dim>>(lame_lambda,
@@ -871,7 +898,8 @@ namespace PhaseField
 								            residual_k,
 									    length_scale,
 									    viscosity,
-									    gc);
+									    gc,
+									    plane_stress_flag);
       m_length_scale = length_scale;
       m_gc = gc;
       m_viscosity = viscosity;
@@ -1609,7 +1637,8 @@ namespace PhaseField
 
         for (unsigned int q_point = 0; q_point < m_n_q_points; ++q_point)
           lqph[q_point]->setup_lqp(lame_lambda, lame_mu, length_scale,
-				   gc, viscosity, residual_k);
+				   gc, viscosity, residual_k,
+				   m_parameters.m_plane_stress);
       }
   }
 
@@ -6133,27 +6162,52 @@ namespace PhaseField
   template <int dim>
   void PhaseFieldMonolithicSolve<dim>::print_parameter_information()
   {
+    if (m_parameters.m_type_nonlinear_solver == "LBFGS")
+      {
+	m_logfile << "WARNING: this version of LBFGS does not enforce"
+	    " phase-field irreversibility." << std::endl;
+	m_logfile << "It should only be used for demonstrating the importance of"
+	    " inequality constraints." << std::endl;
+	m_logfile << "The obtained result is meaningless!" << std::endl;
+      }
+
     m_logfile << "Scenario number = " << m_parameters.m_scenario << std::endl;
     m_logfile << "Log file = " << m_parameters.m_logfile_name << std::endl;
     m_logfile << "Write iteration history to log file? = " << std::boolalpha
 	      << m_parameters.m_output_iteration_history << std::endl;
+
+    if (dim == 2)
+      {
+	if (m_parameters.m_plane_stress)
+	  m_logfile << "2D plane-stress case" << std::endl;
+	else
+	  m_logfile << "2D plane-strain case" << std::endl;
+      }
+
     m_logfile << "Nonlinear solver type = " << m_parameters.m_type_nonlinear_solver << std::endl;
     m_logfile << "Linear solver type = " << m_parameters.m_type_linear_solver << std::endl;
+
     if (m_parameters.m_type_linear_solver == "CG")
       {
         m_logfile << "Preconditioner type for CG = " << m_parameters.m_type_preconditioner << std::endl;
         m_logfile << "Convergence tolerance for CG iterations = " << m_parameters.m_CG_tolerace << std::endl;
       }
+
     m_logfile << "Mesh refinement strategy = " << m_parameters.m_refinement_strategy << std::endl;
+
+    if (m_parameters.m_refinement_strategy == "adaptive-refine")
+      {
+	m_logfile << "\tMaximum adaptive refinement times allowed in each step = "
+		  << m_parameters.m_max_adaptive_refine_times << std::endl;
+	m_logfile << "\tMaximum allowed cell refinement level = "
+		  << m_parameters.m_max_allowed_refinement_level << std::endl;
+	m_logfile << "\tPhasefield-based refinement threshold value = "
+		  << m_parameters.m_phasefield_refine_threshold << std::endl;
+      }
+
     m_logfile << "L-BFGS_m = " << m_parameters.m_LBFGS_m << std::endl;
     m_logfile << "Global refinement times = " << m_parameters.m_global_refine_times << std::endl;
     m_logfile << "Local prerefinement times = " <<m_parameters. m_local_prerefine_times << std::endl;
-    m_logfile << "Maximum adaptive refinement times allowed in each step = "
-	      << m_parameters.m_max_adaptive_refine_times << std::endl;
-    m_logfile << "Maximum allowed cell refinement level = "
-    	      << m_parameters.m_max_allowed_refinement_level << std::endl;
-    m_logfile << "Phasefield-based refinement threshold value = "
-	      << m_parameters.m_phasefield_refine_threshold << std::endl;
     m_logfile << "Allowed maximum h/l ratio = " << m_parameters.m_allowed_max_h_l_ratio << std::endl;
     m_logfile << "total number of material types = " << m_parameters.m_total_material_regions << std::endl;
     m_logfile << "material data file name = " << m_parameters.m_material_file_name << std::endl;
