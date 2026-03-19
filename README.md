@@ -9,6 +9,16 @@ This repository provides the source code and the input files for the numerical e
 3. This monolithic scheme is combined with an adaptive mesh refinement technique to alleviate the heavy computational cost associated with the phase-field fracture simulations.
 4. Several 2D and 3D examples under cyclic loading conditions are provided.
 
+The basic idea of the gradient projection is illustrated below:
+<p align="center">
+<img src="./doc/gradient_projection.png" width="1000">
+</p>
+The gradient projection operation for the phase-field method is defined as the following simple form:
+<p align="center">
+<img src="./doc/eq14.png" width="400">
+</p>
+where lb_i and ub_i represent the lower bound and upper bound of the phase-field value at a finite element node i. Based on this projection, the phase-field value is strictly bounnded between 1.0 and the previous converged value to enforce the irreversibility.
+
 ### Latest update
 1. (Sept. 10th, 2025) Add a compiler marco so that the code also works for the older version of the deal.ii library due to the interface change of the function `interpolate()` in the `SolutionTransfer` class.
 2. (March 18th, 2026) Add an option to differentiate plane stress and plane strain in 2D cases.
@@ -18,6 +28,18 @@ This repository provides the source code and the input files for the numerical e
 The repository contains the following content:
 1. The source code of the gradient projection phase-field monolithic solver.
 2. The input files for several 2D and 3D phase-field fracture simulations under cyclic loading conditions.
+
+### Examples:
+Cyclic shear loading case:
+<p align="center">
+<img src="./doc/shear_cyclic_load.png" width="770">
+</p>
+<p align="center">
+<img src="./doc/shear.png" width="800">
+</p>
+<p align="center">
+<img src="./doc/shear_load_disp.png" width="800">
+</p>
 
 ### Input file options
 1. In the input file for each numerical example, under the "Linear solver type", users can choose to use either the direct matrix factorization method or the conjugate gradient method with a preconditioner based on the incomplete LU (ILU) decomposition. According to the author's experiences, the conjugate gradient method (CG) is always faster than the direct matrix factorization.
