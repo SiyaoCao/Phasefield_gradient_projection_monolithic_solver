@@ -253,6 +253,7 @@ namespace PhaseField
       bool m_output_iteration_history;
       bool m_plane_stress;
       std::string m_type_nonlinear_solver;
+      std::string m_type_line_search;
       std::string m_type_linear_solver;
       std::string m_type_preconditioner;
       double m_CG_tolerace;
@@ -300,6 +301,12 @@ namespace PhaseField
                           "LBFGSB",
                           Patterns::Selection("LBFGS|LBFGSB"),
                           "Type of solver used to solve the nonlinear system");
+
+        prm.declare_entry("Line search type",
+                          "GradientBased",
+                          Patterns::Selection("GradientBased|StrongWolfe"),
+                          "Type of line search method, the gradient-based method "
+                          "should be preferred since it is generally faster");
 
         prm.declare_entry("Linear solver type",
                           "CG",
@@ -385,6 +392,7 @@ namespace PhaseField
         m_output_iteration_history = prm.get_bool("Output iteration history");
         m_plane_stress = prm.get_bool("Plane stress");
         m_type_nonlinear_solver = prm.get("Nonlinear solver type");
+        m_type_line_search = prm.get("Line search type");
         m_type_linear_solver = prm.get("Linear solver type");
         m_type_preconditioner = prm.get("Preconditioner type for CG");
         m_CG_tolerace = prm.get_double("CG tolerance");
@@ -1140,6 +1148,9 @@ namespace PhaseField
 				const BlockVector<double> & gradient_g,
 				const BlockVector<double> & solution_delta,
 				BlockVector<double> & solution_delta_cauchy_point);
+
+    double line_search_stepsize_gradient_based(const BlockVector<double> & BFGS_p_vector,
+					       const BlockVector<double> & solution_delta);
 
     double line_search_stepsize_strong_wolfe(const double phi_0,
 				             const double phi_0_prime,
@@ -4099,6 +4110,75 @@ namespace PhaseField
     m_timer.leave_subsection();
   }
 
+
+
+  template <int dim>
+  double PhaseFieldMonolithicSolve<dim>::line_search_stepsize_gradient_based(const BlockVector<double> & BFGS_p_vector,
+				                                             const BlockVector<double> & solution_delta)
+  {
+    BlockVector<double> g_old(m_system_rhs);
+
+    // BFGS_p_vector is the search direction
+    BlockVector<double> solution_delta_trial(solution_delta);
+    // take a full step size 1.0
+    solution_delta_trial.add(1.0, BFGS_p_vector);
+
+    update_qph_incremental(solution_delta_trial, m_solution);
+
+    BlockVector<double> g_new(m_dofs_per_block);
+    assemble_system_rhs_BFGS_parallel(m_solution, g_new);
+
+    BlockVector<double> y_old(m_dofs_per_block);
+
+    y_old = g_new - g_old;
+
+    double alpha = 1.0;
+
+    double alpha_old = 0.0;
+
+    double delta_alpha_old = alpha - alpha_old;
+
+    double delta_alpha_new;
+
+    unsigned int ls_max = 10;
+
+    unsigned int i = 1;
+
+    for (; i <= ls_max; ++i)
+      {
+	delta_alpha_new = -delta_alpha_old
+	                * (g_new * BFGS_p_vector)/(y_old * BFGS_p_vector);
+	alpha += delta_alpha_new;
+
+	if (std::fabs(delta_alpha_new) < 1.0e-5)
+	  break;
+
+        if (i == ls_max)
+          {
+            alpha = 1.0;
+            break;
+          }
+
+        g_old = g_new;
+
+        // BFGS_p_vector is the search direction
+        solution_delta_trial = solution_delta;
+        solution_delta_trial.add(alpha, BFGS_p_vector);
+        update_qph_incremental(solution_delta_trial, m_solution);
+        assemble_system_rhs_BFGS_parallel(m_solution, g_new);
+
+        y_old = g_new - g_old;
+
+        delta_alpha_old = delta_alpha_new;
+      }
+
+    if (alpha < 1.0e-3)
+      alpha = 1.0;
+
+    //num_ls = i;
+    return alpha;
+  }
+
   template <int dim>
   double PhaseFieldMonolithicSolve<dim>::line_search_stepsize_strong_wolfe(const double phi_0,
 				                                           const double phi_0_prime,
@@ -4596,13 +4676,27 @@ namespace PhaseField
         m_constraints.distribute(LBFGS_r_vector);
 
         // We need a line search algorithm to decide line_search_parameter
-        const double phi_0 = calculate_energy_functional();
-        const double phi_0_prime = m_system_rhs * LBFGS_r_vector;
 
-        line_search_parameter = line_search_stepsize_strong_wolfe(phi_0,
-						                  phi_0_prime,
-								  LBFGS_r_vector,
-						                  solution_delta);
+        if(m_parameters.m_type_line_search == "StrongWolfe")
+          {
+            const double phi_0 = calculate_energy_functional();
+            const double phi_0_prime = m_system_rhs * LBFGS_r_vector;
+
+            line_search_parameter = line_search_stepsize_strong_wolfe(phi_0,
+		    				                      phi_0_prime,
+								      LBFGS_r_vector,
+						                      solution_delta);
+          }
+        else if(m_parameters.m_type_line_search == "GradientBased")
+          {
+	    // LBFGS_r_vector is the search direction
+	    line_search_parameter = line_search_stepsize_gradient_based(LBFGS_r_vector,
+									solution_delta);
+          }
+        else
+          {
+            Assert(false, ExcMessage("An unknown line search method is called!"));
+          }
 
         LBFGS_r_vector *= line_search_parameter;
         LBFGS_update = LBFGS_r_vector;
@@ -5556,13 +5650,27 @@ namespace PhaseField
 	m_constraints.distribute(LBFGS_update);
 
 	// We need a line search algorithm to decide line_search_parameter
-	const double phi_0 = calculate_energy_functional();
-	const double phi_0_prime = m_system_rhs * LBFGS_update;
 
-	line_search_parameter = line_search_stepsize_strong_wolfe(phi_0,
-								  phi_0_prime,
-								  LBFGS_update,
-								  solution_delta);
+        if(m_parameters.m_type_line_search == "StrongWolfe")
+          {
+	    const double phi_0 = calculate_energy_functional();
+	    const double phi_0_prime = m_system_rhs * LBFGS_update;
+
+	    line_search_parameter = line_search_stepsize_strong_wolfe(phi_0,
+								      phi_0_prime,
+								      LBFGS_update,
+								      solution_delta);
+          }
+        else if(m_parameters.m_type_line_search == "GradientBased")
+          {
+	    // LBFGS_r_vector is the search direction
+	    line_search_parameter = line_search_stepsize_gradient_based(LBFGS_update,
+									solution_delta);
+          }
+        else
+          {
+            Assert(false, ExcMessage("An unknown line search method is called!"));
+          }
 
 	LBFGS_update *= line_search_parameter;
 
@@ -6185,6 +6293,7 @@ namespace PhaseField
       }
 
     m_logfile << "Nonlinear solver type = " << m_parameters.m_type_nonlinear_solver << std::endl;
+    m_logfile << "Line search type = " << m_parameters.m_type_line_search << std::endl;
     m_logfile << "Linear solver type = " << m_parameters.m_type_linear_solver << std::endl;
 
     if (m_parameters.m_type_linear_solver == "CG")
