@@ -128,7 +128,11 @@ namespace PhaseField
 	       const BlockVector<double> & src) const;
 
   private:
+#  if DEAL_II_VERSION_GTE(9, 7, 0)
     const ObserverPointer<const BlockSparseMatrix<double> > m_system_matrix;
+#  else
+    const SmartPointer<const BlockSparseMatrix<double> > m_system_matrix;
+#  endif
   };
 
   usr_Jacobi_preconditioner::usr_Jacobi_preconditioner(const BlockSparseMatrix<double> & S)
@@ -154,7 +158,11 @@ namespace PhaseField
 	       const BlockVector<double> & src) const;
 
   private:
+#  if DEAL_II_VERSION_GTE(9, 7, 0)
     const ObserverPointer<const SparseDirectUMFPACK > m_matrix_LU;
+#  else
+    const SmartPointer<const SparseDirectUMFPACK > m_matrix_LU;
+#  endif
   };
 
   usr_sparseLU_preconditioner::usr_sparseLU_preconditioner(const SparseDirectUMFPACK & matrix_factorization)
@@ -178,8 +186,13 @@ namespace PhaseField
 	     const BlockVector<double> & src) const;
 
   private:
+#  if DEAL_II_VERSION_GTE(9, 7, 0)
     const ObserverPointer<const SparseILU<double> > m_ILU_factorization_disp;
     const ObserverPointer<const SparseILU<double> > m_ILU_factorization_phasefield;
+#  else
+    const SmartPointer<const SparseILU<double> > m_ILU_factorization_disp;
+    const SmartPointer<const SparseILU<double> > m_ILU_factorization_phasefield;
+#  endif
   };
 
   usr_sparseILU_preconditioner::usr_sparseILU_preconditioner(const SparseILU<double> & ILU_factorization_disp,
@@ -6061,7 +6074,7 @@ namespace PhaseField
 	       << 0.0 << "\t"
 	       << 0.0 << std::endl;
 
-      for (auto const time_force : m_history_reaction_force)
+      for (auto const & time_force : m_history_reaction_force)
 	{
 	  myfile_reaction_force << time_force.first << "\t";
 	  if (dim == 2)
@@ -6086,7 +6099,7 @@ namespace PhaseField
 	            << 0.0 << "\t"
 	            << 0.0 << std::endl;
 
-      for (auto const time_energy : m_history_energy)
+      for (auto const & time_energy : m_history_energy)
 	{
 	  myfile_energy << std::fixed << std::setprecision(10) << std::scientific
 	                << time_energy.first     << "\t"
