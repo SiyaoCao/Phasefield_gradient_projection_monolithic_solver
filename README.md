@@ -12,6 +12,7 @@ This repository provides the source code and the input files for the numerical e
 ### Latest update
 1. (Sept. 10th, 2025) Add a compiler marco so that the code also works for the older version of the deal.ii library due to the interface change of the function `interpolate()` in the `SolutionTransfer` class.
 2. (March 18th, 2026) Add an option to differentiate plane stress and plane strain in 2D cases.
+3. (March 19th, 2026) Add an option to choose between a secant gradient based line search and the strong Wolfe line search. The gradient based line search should be able to reduce the wall clock time by 30% to 50% comparing with the strong Wolfe line search.
 
 ### Content
 The repository contains the following content:
