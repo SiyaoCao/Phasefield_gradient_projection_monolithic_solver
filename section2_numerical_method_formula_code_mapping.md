@@ -1,7 +1,7 @@
 # explain.md 第 2 章（Numerical method）公式-代码逐段对应解读
 
 > 说明：按你的要求，严格使用“**代码在前、公式在后**”格式；每个小节都给出**可访问链接**（GitHub 行号链接）+ **完整代码片段显示** + **公式渲染**。  
-> 仓库链接基准分支使用当前工作分支：`main`。
+> 仓库链接基准分支使用稳定分支：`main`。
 
 ---
 
@@ -656,7 +656,7 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
   }
 ```
 
-> 说明：论文公式（10）给出完整 \[\mathbf K_{uu},\mathbf K_{ud},\mathbf K_{du},\mathbf K_{dd}\]。 本仓库在求解流程中核心使用块对角近似（公式（11）），因此这里最底层代码直接装配的是 \[\mathbf K_{uu}\] 与 \[\mathbf K_{dd}\]。\[\mathbf K_{ud},\mathbf K_{du}\] 在该函数中不显式组装。
+> 说明：论文公式（10）给出完整 \[\mathbf K_{uu},\mathbf K_{ud},\mathbf K_{du},\mathbf K_{dd}\]。 本仓库在求解流程中有意采用块对角近似（公式（11）），因此在最底层装配中只保留 \[\mathbf K_{uu}\] 与 \[\mathbf K_{dd}\]，并有意省略耦合块 \[\mathbf K_{ud},\mathbf K_{du}\]。
 
 **公式（原文对应）：**
 \[
