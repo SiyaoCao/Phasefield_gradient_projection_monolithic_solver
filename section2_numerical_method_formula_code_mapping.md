@@ -1,7 +1,7 @@
 # explain.md 第 2 章（Numerical method）公式-代码逐段对应解读
 
 > 说明：按你的要求，严格使用“**代码在前、公式在后**”格式；每个小节都给出**可访问链接**（GitHub 行号链接）+ **完整代码片段显示** + **公式渲染**。  
-> 仓库链接基准分支使用当前工作分支：`copilot/extract-explain-md-formulas`。
+> 仓库链接基准分支使用当前工作分支：`main`。
 
 ---
 
@@ -11,7 +11,7 @@
 
 **对应最底层代码链接：**
 - 应力/能量里真正应用 \[g(d)+k\] 的位置（核心执行点）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L846-L885
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L846-L885
 
 **代码：**
 ```cpp
@@ -41,7 +41,7 @@ m_strain_energy_total = degradation * m_strain_energy_positive + m_strain_energy
 
 **对应最底层代码链接：**
 - 退化函数定义  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L244-L257
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L244-L257
 
 **代码：**
 ```cpp
@@ -73,7 +73,7 @@ g(d) = (1 - d)^{2}. \quad (6)
 
 **对应最底层代码链接：**
 - 正/负 ramp 与 Heaviside 的实现  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/SpectrumDecomposition.cc#L19-L38
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/SpectrumDecomposition.cc#L19-L38
 
 **代码：**
 ```cpp
@@ -111,9 +111,9 @@ H(x)=\begin{cases}1,&x\ge 0\\0,&x<0\end{cases}
 
 **对应最底层代码链接：**
 - 应变谱分解入口  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/SpectrumDecomposition.h#L29-L43
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/SpectrumDecomposition.h#L29-L43
 - 在材料点调用谱分解  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L829-L833
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L829-L833
 
 **代码：**
 ```cpp
@@ -152,9 +152,9 @@ usr_spectrum_decomposition::spectrum_decomposition<dim>(m_strain,
 
 **对应最底层代码链接：**
 - 正/负应变张量构造  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/SpectrumDecomposition.h#L45-L69
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/SpectrumDecomposition.h#L45-L69
 - 材料点调用  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L835-L837
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L835-L837
 
 **代码：**
 ```cpp
@@ -203,7 +203,7 @@ strain_negative = usr_spectrum_decomposition::negative_tensor(eigenvalues, eigen
 
 **对应最底层代码链接：**
 - 正负应变能密度（材料点）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L876-L883
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L876-L883
 
 **代码：**
 ```cpp
@@ -229,7 +229,7 @@ m_strain_energy_negative = 0.5 * my_lambda * usr_spectrum_decomposition::negativ
 
 **对应最底层代码链接：**
 - 正负应力 + 合成总应力  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L857-L865
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L857-L865
 
 **代码：**
 ```cpp
@@ -258,7 +258,7 @@ m_stress_positive = stress_positive;
 
 **对应最底层代码链接：**
 - 与上式同一实现（同一最底层计算）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L857-L862
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L857-L862
 
 **代码：**
 ```cpp
@@ -283,9 +283,9 @@ stress_negative = my_lambda * usr_spectrum_decomposition::negative_ramp_function
 
 **对应最底层代码链接：**
 - \[\mathbf C^+\] / \[\mathbf C^-\] 与总切线 \[\mathbf C\]  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L867-L875
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L867-L875
 - 投影算子 \[\mathbb P^+,\mathbb P^-\]  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/SpectrumDecomposition.h#L72-L143
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/SpectrumDecomposition.h#L72-L143
 
 **代码：**
 ```cpp
@@ -326,7 +326,7 @@ negative_projector += 0.5 * v_ab * 0.5 * (G[a][b] + G[b][a]);
 
 **对应最底层代码链接：**
 - 正负投影算子完整实现  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/SpectrumDecomposition.h#L72-L143
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/SpectrumDecomposition.h#L72-L143
 
 **代码：**
 ```cpp
@@ -391,9 +391,9 @@ void positive_negative_projectors(Vector<double> const & eigenvalues,
 
 **对应最底层代码链接：**
 - 残量单元装配（\[\delta\Pi\] 对应离散残量）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3804-L3820
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3804-L3820
 - 四点场更新（\[\boldsymbol\epsilon(\mathbf u),d,\nabla d,d_n\]）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L1800-L1816
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L1800-L1816
 
 **代码：**
 ```cpp
@@ -442,9 +442,9 @@ else if (i_group == m_d_dof)
 
 **对应最底层代码链接：**
 - 位移残量项 + 体力项  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3804-L3810
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3804-L3810
 - 相场残量项  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3811-L3820
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3811-L3820
 
 **代码：**
 ```cpp
@@ -481,7 +481,7 @@ r_d(\pmb u,d)=(\delta d,\frac{g_c}{l}d)+(\nabla\delta d,g_cl\nabla d)+(\delta d,
 
 **对应最底层代码链接：**
 - 单元形函数值提取（离散场重建）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3758-L3770
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3758-L3770
 
 **代码：**
 ```cpp
@@ -514,7 +514,7 @@ else if (k_group == m_d_dof)
 
 **对应最底层代码链接：**
 - 测试函数层面通过 \[i\] 号形函数参与残量装配  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3800-L3820
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3800-L3820
 
 **代码：**
 ```cpp
@@ -551,9 +551,9 @@ for (const unsigned int i : scratch.m_fe_values.dof_indices())
 
 **对应最底层代码链接：**
 - 全局能量积分（按单元/积分点累加）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L6117-L6139
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L6117-L6139
 - 其中材料点能量定义（应变能 + 裂纹耗散）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L884-L891
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L884-L891
 
 **代码：**
 ```cpp
@@ -598,7 +598,7 @@ for (const auto &cell : m_dof_handler.active_cell_iterators())
 
 **对应最底层代码链接：**
 - 位移残量 \[r_{\mathbf u_A}\] 与相场残量 \[r_{d_A}\] 的离散装配  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3804-L3820
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3804-L3820
 
 **代码：**
 ```cpp
@@ -637,7 +637,7 @@ r_{d_A}&=\frac{\partial\Pi}{\partial d_A}
 
 **对应最底层代码链接：**
 - 该仓库实际用于求解的是近似 \[\hat{\mathbf K}\]（见公式（11）），其单元级块装配在：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3931-L3951
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3931-L3951
 
 **代码：**
 ```cpp
@@ -656,7 +656,7 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
   }
 ```
 
-> 说明：论文公式（10）给出完整 \[\mathbf K_{uu},\mathbf K_{ud},\mathbf K_{du},\mathbf K_{dd}\]。本仓库在求解流程中核心使用块对角近似（公式（11）），因此这里最底层代码直接装配的是 \[\mathbf K_{uu}\] 与 \[\mathbf K_{dd}\]。\[\mathbf K_{ud},\mathbf K_{du}\] 在该函数中不显式组装。
+> 说明：论文公式（10）给出完整 \[\mathbf K_{uu},\mathbf K_{ud},\mathbf K_{du},\mathbf K_{dd}\]。 本仓库在求解流程中核心使用块对角近似（公式（11）），因此这里最底层代码直接装配的是 \[\mathbf K_{uu}\] 与 \[\mathbf K_{dd}\]。\[\mathbf K_{ud},\mathbf K_{du}\] 在该函数中不显式组装。
 
 **公式（原文对应）：**
 \[
@@ -680,9 +680,9 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
 
 **对应最底层代码链接：**
 - 直接设置相场增量上下界（Cauchy 点阶段）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L4859-L4870
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L4859-L4870
 - 活跃集判定（下界/上界/重合）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L5731-L5759
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L5731-L5759
 
 **代码：**
 ```cpp
@@ -733,7 +733,7 @@ d_A^{(n)} \le d_A \le 1.
 
 **对应最底层代码链接：**
 - 只组装 \[uu\] 与 \[dd\]，不组装 \[ud\]/\[du\] 的单元矩阵逻辑（即块对角）  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3931-L3954
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3931-L3954
 
 **代码：**
 ```cpp
@@ -768,17 +768,17 @@ else
 
 **链接：**
 - FE 解 \[\to\] 积分点场变量更新：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L1798-L1816
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L1798-L1816
 - 积分点材料更新入口：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L931-L939
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L931-L939
 - 材料本构/能量核心：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L820-L891
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L820-L891
 - 单元残量装配：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3722-L3857
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3722-L3857
 - 单元块对角 Hessian 装配：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L3860-L3959
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L3860-L3959
 - 全局能量计算：  
-  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/copilot/extract-explain-md-formulas/main.cc#L6117-L6168
+  https://github.com/SiyaoCao/Phasefield_gradient_projection_monolithic_solver/blob/main/main.cc#L6117-L6168
 
 **代码（调用链关键片段）：**
 ```cpp
