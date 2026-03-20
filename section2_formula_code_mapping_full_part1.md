@@ -5,6 +5,7 @@
 > 2. 每一小节严格按“代码在前、公式在后”的顺序。
 > 3. 每个条目都给出可直接访问的 GitHub 链接（`blob/main` + 行号）。
 > 4. 为保证可追溯性，代码片段直接展示，不省略关键计算行。
+> 5. 公式编号统一记为 `Eq.(n)` 格式；符号说明项若无原始编号，则标注为“符号定义”。
 
 ---
 
@@ -63,7 +64,7 @@ m_strain_energy_negative = 0.5 * my_lambda * usr_spectrum_decomposition::negativ
 m_strain_energy_total = degradation * m_strain_energy_positive + m_strain_energy_negative;
 ```
 
-**论文原公式（2.1, Eq.5）**
+**论文原公式（2.1, Eq.(5)）**
 
 \[
 \psi(\pmb{\epsilon}, d) = [g(d) + k] \, \psi^{+}(\pmb{\epsilon}) + \psi^{-}(\pmb{\epsilon}).
@@ -92,7 +93,7 @@ double degradation_function(const double d)
 }
 ```
 
-**论文原公式（2.1, Eq.6）**
+**论文原公式（2.1, Eq.(6)）**
 
 \[
 g(d) = (1 - d)^2.
@@ -524,7 +525,7 @@ for (const auto &face : cell->face_iterators())
     }
 ```
 
-**论文原公式（2.1, Eq.7）**
+**论文原公式（2.1, Eq.(7)）**
 
 \[
 \begin{array}{rl}
@@ -733,7 +734,7 @@ double PhaseFieldMonolithicSolve<dim>::calculate_energy_functional() const
 }
 ```
 
-**论文原公式（2.2, Eq.8）**
+**论文原公式（2.2, Eq.(8)）**
 
 \[
 \begin{array}{rl}
@@ -778,7 +779,7 @@ else if (i_group == m_d_dof)
   }
 ```
 
-**论文原公式（2.2, Eq.9）**
+**论文原公式（2.2, Eq.(9)）**
 
 \[
 \begin{array}{rl}
@@ -852,7 +853,7 @@ for (const unsigned int i : scratch.m_fe_values.dof_indices())
 **解读**
 
 - 该段代码明确按 `u` 与 `d` 自由度分组组装刚度，体现论文的分块结构。
-- 当前实现主要显式构造了对角块贡献（`uu` 与 `dd`），并通过其它流程与近似策略服务于BFGS/L-BFGS框架。
+- 当前实现主要显式构造了对角块贡献（`uu` 与 `dd`），并通过其他流程与近似策略服务于BFGS/L-BFGS框架。
 
 ---
 
@@ -900,7 +901,7 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
   }
 ```
 
-**论文原公式（2.2, Eq.10）**
+**论文原公式（2.2, Eq.(10)）**
 
 \[
 \begin{array}{rl}

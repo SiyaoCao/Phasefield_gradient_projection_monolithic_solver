@@ -17,7 +17,7 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
   }
 ```
 
-**论文原公式（2.2, Eq.11）**
+**论文原公式（2.2, Eq.(11)）**
 
 \[
 \hat{\mathbf{K}} =
@@ -30,7 +30,7 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
 \]
 
 **解读**
-- 代码装配阶段显式区分 `u-u` 与 `d-d` 两个对角块，和 Eq.(11) 的结构一致。
+- 代码装配阶段显式区分 `u-u` 与 `d-d` 两个对角块，与 Eq.(11) 的结构一致。
 - 这类块对角结构在文中用于后续单调迭代、子空间最小化与预条件设计。
 
 ---
@@ -118,11 +118,12 @@ m_crack_energy_dissipation = m_gc * (  0.5 / m_length_scale * m_phase_field_valu
 
 **解读**
 
+- 这里公式中的 \(l\) 与代码变量 `m_length_scale` 一一对应（只是符号命名不同，物理含义相同）。
 - 代码中 `0.5/l*d^2 + 0.5*l*|grad d|^2` 与上式逐项一致，再乘 `g_c` 形成裂纹耗散能密度。
 
 ---
 
-## 结论：第2章“公式→代码”最短路径总结
+## 第2章公式与代码映射总结
 
 1. **材料本构与拉压分裂**：`main.cc::LinearIsotropicElasticityAdditiveSplit::update_material_data` + `SpectrumDecomposition.*`。
 2. **退化函数与导数**：`main.cc` 顶层 `degradation_function*` 三个函数。
