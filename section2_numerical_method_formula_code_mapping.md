@@ -656,7 +656,7 @@ else if ((i_group == j_group) && (i_group == m_d_dof))
   }
 ```
 
-> 说明：论文公式（10）给出完整 \[\mathbf K_{uu},\mathbf K_{ud},\mathbf K_{du},\mathbf K_{dd}\]。 本仓库在求解流程中有意采用块对角近似（公式（11）），因此在最底层装配中只保留 \[\mathbf K_{uu}\] 与 \[\mathbf K_{dd}\]，并有意省略耦合块 \[\mathbf K_{ud},\mathbf K_{du}\]。
+> 说明： 论文公式（10） 给出完整 \[\mathbf K_{uu},\mathbf K_{ud},\mathbf K_{du},\mathbf K_{dd}\]。 本仓库在求解流程中有意采用块对角近似（公式（11）），因此在最底层装配中只保留 \[\mathbf K_{uu}\] 与 \[\mathbf K_{dd}\]，并有意省略耦合块 \[\mathbf K_{ud},\mathbf K_{du}\]。
 
 **公式（原文对应）：**
 \[
