@@ -314,9 +314,6 @@ x_{i} = x_{i}^{c},\;\forall i\in \mathcal{A}_{k}(\pmb{x}^{c})\quad \text{and}\qu
 
 - 本部分已覆盖第3章中 3.1 与 3.2 的全部展示公式（含 Comment 1 的实现公式）。
 
-> 范围：对应 `explain.md` 中第3章后半部分（3.3 与 3.4）全部展示公式。  
-> 说明：每个公式均完整显示在前，并给出含义、必要推导与详细解读。
-
 ---
 
 ## 3.3 Generalized Cauchy point（公式逐一解读）
