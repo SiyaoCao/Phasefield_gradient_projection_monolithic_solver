@@ -492,18 +492,18 @@ P^{-1}A\mathbf{x}=P^{-1}\mathbf{b}
 - `664-667 current`，`668-671 end`，`672-675 get_delta_t`，`676-679 get_magnitude`，`680-683 get_timestep`：时间访问器。
 - `684-703 increment`：按时间表更新 [ t_{n+1}=t_n+\Delta t_n ]。
 - `1084-1089 Errors::reset`：重置误差量。
-- `1091-1099 Errors::normalize`：归一化 [ arepsilon_{rel}=arepsilon/arepsilon_0 ]。
+- `1091-1099 Errors::normalize`：归一化 [ \varepsilon_{rel}=\varepsilon/\varepsilon_0 ]。
 
 ### 13.4 本构与积分点历史（全部方法）
 - `747-790`（`LinearIsotropicElasticityAdditiveSplit` 全部 getter）：返回应力/切线/能量/相场状态。
 - `820-894 update_material_data`：谱分解、拉压分裂、应力切线和能量更新；核心关系：
-  [ oldsymbol{\sigma}=(g(d)+k)oldsymbol{\sigma}^+ + oldsymbol{\sigma}^- ]。
+  [ \boldsymbol{\sigma}=(g(d)+k)\boldsymbol{\sigma}^+ + \boldsymbol{\sigma}^- ]。
 - `908-929 PointHistory::setup_lqp`：创建积分点材料对象。
 - `931-939 PointHistory::update_field_values`：把当前增量场喂给本构更新。
 - `941-994 PointHistory` 全部 getter：读取积分点能量、应力、材料常数等。
 
 ### 13.5 网格与系统（全部方法）
-- `2057-2097 make_grid`：按场景分发网格构造并计算参考体积 [ V_0=\int_{\Omega_0}1\,d\Omega ]。
+- `2057-2097 make_grid`：按场景分发网格构造并计算参考体积 [ V_0=\int_{\Omega_0}1\,\mathrm{d}\Omega ]。
 - `2100-3285 make_grid_case_1 ... make_grid_case_11`：11个算例的几何、边界编号、预加密/自适应初始加密。
 - `3288-3354 setup_system`：DoF 分配、稀疏结构、矩阵向量初始化、`setup_qph()`。
 - `3357-3638 make_constraints`：各场景位移边界与增量约束装配。
