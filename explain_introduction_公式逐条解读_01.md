@@ -129,7 +129,7 @@ l
 \[
 \Gamma_l \sim \int \frac{1}{2l}\left(d^2+l^2(d')^2\right)\,\mathrm dx
 \]
-对 integrand 使用配方法可见其最小化倾向于平衡两部分：
+对被积函数使用配方法可见其最小化倾向于平衡两部分：
 \[
 \frac{1}{2l}d^2 \quad\text{与}\quad \frac{l}{2}(d')^2
 \]
@@ -271,9 +271,14 @@ C
 \nabla f(x)
 \]
 
-并给出投影操作写法：
+并给出投影操作写法（下式为论文原文记法，属于示意性写法）：
 \[
 \mathrm{Proj}_C(\mathbf{x}_k = \mathbf{a}_k\nabla f(\mathbf{x}_k)).
+\]
+
+为避免歧义，也可将其理解为“对某个与梯度方向相关的中间量 \\(\\mathbf y_k\\) 做投影”，即
+\[
+\mathbf x_{k+1}=\mathrm{Proj}_C(\mathbf y_k),\quad \mathbf y_k=\mathbf x_k-\alpha_k\nabla f(\mathbf x_k).
 \]
 
 ### 含义与规范写法说明
@@ -430,7 +435,7 @@ d_{n+1}\ge d_n
 11. \[t=0\]  
 12. \[d_0(\pmb x)=0\]  
 13. \[f(x),\ C,\ \nabla f(x)\]  
-14. \[\mathrm{Proj}_C(\mathbf{x}_k = \mathbf{a}_k\nabla f(\mathbf{x}_k))\]（原文写法）  
+14. \[\mathrm{Proj}_C(\mathbf{x}_k = \mathbf{a}_k\nabla f(\mathbf{x}_k))\]（论文原文中的非标准示意写法；规范实现见第8节给出的标准投影迭代表达）  
 15. \[\mathrm{lb}_i\le x_i\le\mathrm{ub}_i\]  
 16. \[\mathrm{lb}_i=d_i^{(n)}\le d_i^{(n+1)}\le 1=\mathrm{ub}_i\]
 
