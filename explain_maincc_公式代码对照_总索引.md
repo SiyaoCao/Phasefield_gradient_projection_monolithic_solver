@@ -1,0 +1,114 @@
+# explain.md 与 main.cc 公式代码对应总索引
+
+说明：由于“不得省略代码显示”且需控制单文件行数，按公式块拆分为多个 md 文件。
+
+- 公式块 001: `explain_maincc_公式代码对照_公式块001.md`（1. Introduction）
+- 公式块 002: `explain_maincc_公式代码对照_公式块002.md`（1. Introduction）
+- 公式块 003: `explain_maincc_公式代码对照_公式块003.md`（1. Introduction）
+- 公式块 004: `explain_maincc_公式代码对照_公式块004.md`（1. Introduction）
+- 公式块 005: `explain_maincc_公式代码对照_公式块005.md`（1. Introduction）
+- 公式块 006: `explain_maincc_公式代码对照_公式块006.md`（1. Introduction）
+- 公式块 007: `explain_maincc_公式代码对照_公式块007.md`（1. Introduction）
+- 公式块 008: `explain_maincc_公式代码对照_公式块008.md`（2.1. Phase-field formulation）
+- 公式块 009: `explain_maincc_公式代码对照_公式块009.md`（2.1. Phase-field formulation）
+- 公式块 010: `explain_maincc_公式代码对照_公式块010.md`（2.1. Phase-field formulation）
+- 公式块 011: `explain_maincc_公式代码对照_公式块011.md`（2.1. Phase-field formulation）
+- 公式块 012: `explain_maincc_公式代码对照_公式块012.md`（2.1. Phase-field formulation）
+- 公式块 013: `explain_maincc_公式代码对照_公式块013.md`（2.1. Phase-field formulation）
+- 公式块 014: `explain_maincc_公式代码对照_公式块014.md`（2.1. Phase-field formulation）
+- 公式块 015: `explain_maincc_公式代码对照_公式块015.md`（2.1. Phase-field formulation）
+- 公式块 016: `explain_maincc_公式代码对照_公式块016.md`（2.1. Phase-field formulation）
+- 公式块 017: `explain_maincc_公式代码对照_公式块017.md`（2.1. Phase-field formulation）
+- 公式块 018: `explain_maincc_公式代码对照_公式块018.md`（2.1. Phase-field formulation）
+- 公式块 019: `explain_maincc_公式代码对照_公式块019.md`（2.1. Phase-field formulation）
+- 公式块 020: `explain_maincc_公式代码对照_公式块020.md`（2.2. Finite element discretization）
+- 公式块 021: `explain_maincc_公式代码对照_公式块021.md`（2.2. Finite element discretization）
+- 公式块 022: `explain_maincc_公式代码对照_公式块022.md`（2.2. Finite element discretization）
+- 公式块 023: `explain_maincc_公式代码对照_公式块023.md`（2.2. Finite element discretization）
+- 公式块 024: `explain_maincc_公式代码对照_公式块024.md`（2.2. Finite element discretization）
+- 公式块 025: `explain_maincc_公式代码对照_公式块025.md`（2.2. Finite element discretization）
+- 公式块 026: `explain_maincc_公式代码对照_公式块026.md`（2.2. Finite element discretization）
+- 公式块 027: `explain_maincc_公式代码对照_公式块027.md`（2.2. Finite element discretization）
+- 公式块 028: `explain_maincc_公式代码对照_公式块028.md`（3.1. Algorithm overview）
+- 公式块 029: `explain_maincc_公式代码对照_公式块029.md`（3.1. Algorithm overview）
+- 公式块 030: `explain_maincc_公式代码对照_公式块030.md`（3.1. Algorithm overview）
+- 公式块 031: `explain_maincc_公式代码对照_公式块031.md`（3.1. Algorithm overview）
+- 公式块 032: `explain_maincc_公式代码对照_公式块032.md`（3.1. Algorithm overview）
+- 公式块 033: `explain_maincc_公式代码对照_公式块033.md`（3.1. Algorithm overview）
+- 公式块 034: `explain_maincc_公式代码对照_公式块034.md`（3.1. Algorithm overview）
+- 公式块 035: `explain_maincc_公式代码对照_公式块035.md`（3.1. Algorithm overview）
+- 公式块 036: `explain_maincc_公式代码对照_公式块036.md`（3.1. Algorithm overview）
+- 公式块 037: `explain_maincc_公式代码对照_公式块037.md`（3.1. Algorithm overview）
+- 公式块 038: `explain_maincc_公式代码对照_公式块038.md`（3.1. Algorithm overview）
+- 公式块 039: `explain_maincc_公式代码对照_公式块039.md`（3.1. Algorithm overview）
+- 公式块 040: `explain_maincc_公式代码对照_公式块040.md`（3.1. Algorithm overview）
+- 公式块 041: `explain_maincc_公式代码对照_公式块041.md`（3.1. Algorithm overview）
+- 公式块 042: `explain_maincc_公式代码对照_公式块042.md`（3.1. Algorithm overview）
+- 公式块 043: `explain_maincc_公式代码对照_公式块043.md`（3.1. Algorithm overview）
+- 公式块 044: `explain_maincc_公式代码对照_公式块044.md`（3.1. Algorithm overview）
+- 公式块 045: `explain_maincc_公式代码对照_公式块045.md`（3.1. Algorithm overview）
+- 公式块 046: `explain_maincc_公式代码对照_公式块046.md`（3.1. Algorithm overview）
+- 公式块 047: `explain_maincc_公式代码对照_公式块047.md`（3.1. Algorithm overview）
+- 公式块 048: `explain_maincc_公式代码对照_公式块048.md`（3.1. Algorithm overview）
+- 公式块 049: `explain_maincc_公式代码对照_公式块049.md`（3.1. Algorithm overview）
+- 公式块 050: `explain_maincc_公式代码对照_公式块050.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 051: `explain_maincc_公式代码对照_公式块051.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 052: `explain_maincc_公式代码对照_公式块052.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 053: `explain_maincc_公式代码对照_公式块053.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 054: `explain_maincc_公式代码对照_公式块054.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 055: `explain_maincc_公式代码对照_公式块055.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 056: `explain_maincc_公式代码对照_公式块056.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 057: `explain_maincc_公式代码对照_公式块057.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 058: `explain_maincc_公式代码对照_公式块058.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 059: `explain_maincc_公式代码对照_公式块059.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 060: `explain_maincc_公式代码对照_公式块060.md`（3.2. Compact representation of limited-memory BFGS matrix）
+- 公式块 061: `explain_maincc_公式代码对照_公式块061.md`（3.3. Generalized Cauchy point）
+- 公式块 062: `explain_maincc_公式代码对照_公式块062.md`（3.3. Generalized Cauchy point）
+- 公式块 063: `explain_maincc_公式代码对照_公式块063.md`（3.3. Generalized Cauchy point）
+- 公式块 064: `explain_maincc_公式代码对照_公式块064.md`（3.3. Generalized Cauchy point）
+- 公式块 065: `explain_maincc_公式代码对照_公式块065.md`（3.3. Generalized Cauchy point）
+- 公式块 066: `explain_maincc_公式代码对照_公式块066.md`（3.3. Generalized Cauchy point）
+- 公式块 067: `explain_maincc_公式代码对照_公式块067.md`（3.3. Generalized Cauchy point）
+- 公式块 068: `explain_maincc_公式代码对照_公式块068.md`（3.3. Generalized Cauchy point）
+- 公式块 069: `explain_maincc_公式代码对照_公式块069.md`（3.3. Generalized Cauchy point）
+- 公式块 070: `explain_maincc_公式代码对照_公式块070.md`（3.3. Generalized Cauchy point）
+- 公式块 071: `explain_maincc_公式代码对照_公式块071.md`（3.3. Generalized Cauchy point）
+- 公式块 072: `explain_maincc_公式代码对照_公式块072.md`（3.3. Generalized Cauchy point）
+- 公式块 073: `explain_maincc_公式代码对照_公式块073.md`（3.3. Generalized Cauchy point）
+- 公式块 074: `explain_maincc_公式代码对照_公式块074.md`（3.3. Generalized Cauchy point）
+- 公式块 075: `explain_maincc_公式代码对照_公式块075.md`（3.3. Generalized Cauchy point）
+- 公式块 076: `explain_maincc_公式代码对照_公式块076.md`（3.3. Generalized Cauchy point）
+- 公式块 077: `explain_maincc_公式代码对照_公式块077.md`（3.4. Subspace minimization）
+- 公式块 078: `explain_maincc_公式代码对照_公式块078.md`（3.4. Subspace minimization）
+- 公式块 079: `explain_maincc_公式代码对照_公式块079.md`（3.4. Subspace minimization）
+- 公式块 080: `explain_maincc_公式代码对照_公式块080.md`（3.4. Subspace minimization）
+- 公式块 081: `explain_maincc_公式代码对照_公式块081.md`（3.4. Subspace minimization）
+- 公式块 082: `explain_maincc_公式代码对照_公式块082.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 083: `explain_maincc_公式代码对照_公式块083.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 084: `explain_maincc_公式代码对照_公式块084.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 085: `explain_maincc_公式代码对照_公式块085.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 086: `explain_maincc_公式代码对照_公式块086.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 087: `explain_maincc_公式代码对照_公式块087.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 088: `explain_maincc_公式代码对照_公式块088.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 089: `explain_maincc_公式代码对照_公式块089.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 090: `explain_maincc_公式代码对照_公式块090.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 091: `explain_maincc_公式代码对照_公式块091.md`（3.4.1. Direct matrix factorization for the primal approach）
+- 公式块 092: `explain_maincc_公式代码对照_公式块092.md`（3.4.2. Conjugate gradient method for the primal approach）
+- 公式块 093: `explain_maincc_公式代码对照_公式块093.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 094: `explain_maincc_公式代码对照_公式块094.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 095: `explain_maincc_公式代码对照_公式块095.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 096: `explain_maincc_公式代码对照_公式块096.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 097: `explain_maincc_公式代码对照_公式块097.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 098: `explain_maincc_公式代码对照_公式块098.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 099: `explain_maincc_公式代码对照_公式块099.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 100: `explain_maincc_公式代码对照_公式块100.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 101: `explain_maincc_公式代码对照_公式块101.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 102: `explain_maincc_公式代码对照_公式块102.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 103: `explain_maincc_公式代码对照_公式块103.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 104: `explain_maincc_公式代码对照_公式块104.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 105: `explain_maincc_公式代码对照_公式块105.md`（3.4.3. Schur complement for the dual approach）
+- 公式块 106: `explain_maincc_公式代码对照_公式块106.md`（4.1. Cyclic tension-compression test）
+- 公式块 107: `explain_maincc_公式代码对照_公式块107.md`（4.4. Three-dimensional torsion test）
+- 公式块 108: `explain_maincc_公式代码对照_公式块108.md`（5.2. Comparison of convergence behaviors）
+- 公式块 109: `explain_maincc_公式代码对照_公式块109.md`（Appendix）
+- 公式块 110: `explain_maincc_公式代码对照_公式块110.md`（Appendix）
