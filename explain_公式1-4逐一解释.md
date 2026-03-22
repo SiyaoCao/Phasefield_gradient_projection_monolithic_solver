@@ -19,7 +19,7 @@
 - \(\partial\Omega\)：边界。
 - \(\psi\big(\mathbf{e}(\mathbf{u}),d\big)\)：受损材料应变能密度。
 - \(\mathbf{e}(\mathbf{u})=\nabla^{(s)}\mathbf{u}\)：小变形应变张量（对称梯度）。
-- \(g_c\)：临界能量释放率（断裂韧度，单位通常为 \(\mathrm{N/m}\)）。
+- \(g_c\)：临界能量释放率（断裂韧度，单位通常记为 \(\mathrm{J/m^2}\)；与 \(\mathrm{N/m}\) 在量纲上等价）。
 - \(\Gamma_l(d)\)：裂纹表面积（在相场框架下的正则化近似，见公式 (2)）。
 - \(\mathbf{b}\)：体力密度（如重力项）。
 - \(\mathbf{t}\)：Neumann 边界上的外力（面力/牵引力）。
@@ -257,7 +257,7 @@ w(d)=\frac{1}{2}d^2,
 即
 
 \[
- d_i^{(n)} \le d_i^{(n+1)} \le 1,
+d_i^{(n)} \le d_i^{(n+1)} \le 1,
 \]
 
 这正是 explain.md 后续将约束写成 box constraints 的来源。
@@ -281,7 +281,7 @@ w(d)=\frac{1}{2}d^2,
 - \(d\)：相场/损伤标量场。
 - \(\mathbf{e}(\mathbf{u})=\nabla^{(s)}\mathbf{u}\)：小应变。
 - \(\psi\)：应变能密度（含损伤退化）。
-- \(g_c\)：断裂韧度（单位裂纹面能量）。
+- \(g_c\)：断裂韧度（单位裂纹面能量，通常为 \(\mathrm{J/m^2}\)）。
 - \(\Gamma_l(d)\)：裂纹面近似。
 - \(\gamma(d,\nabla d)\)：裂纹密度函数。
 - \(l\)：相场长度尺度。
