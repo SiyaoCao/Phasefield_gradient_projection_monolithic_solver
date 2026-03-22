@@ -5,10 +5,9 @@
 - 本文档只解读 `explain.md` 中 **第 2 章节**（`## 2. Phase-field formulation and finite element discretization`）出现的全部公式与符号。
 - 每个条目均按以下顺序组织：
   1. 先完整显示公式（可渲染）；
-  2. 给出对应 LaTeX 代码（不省略“代码显示”）；
-  3. 解释各部分符号含义；
-  4. 给出公式整体含义；
-  5. 给出必要推导过程。
+  2. 解释各部分符号含义；
+  3. 给出公式整体含义；
+  4. 给出必要推导过程。
 - 公式渲染统一采用 `\[ ... \]`（块公式）与 `\( ... \)`（行内公式）。
 
 ---
@@ -20,14 +19,6 @@
 \[
 \psi(\pmb{\epsilon}, d) = [g(d) + k] \, \psi^{+}(\pmb{\epsilon}) + \psi^{-}(\pmb{\epsilon}), \quad (5)
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\psi(\pmb{\epsilon}, d) = [g(d) + k] \, \psi^{+}(\pmb{\epsilon}) + \psi^{-}(\pmb{\epsilon}), \quad (5)
-\]
-```
 
 **各部分含义：**
 
@@ -59,14 +50,6 @@
 g(d) = (1 - d)^{2}. \quad (6)
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-g(d) = (1 - d)^{2}. \quad (6)
-\]
-```
-
 **各部分含义：**
 
 - \(g(d)\)：退化函数。
@@ -97,16 +80,6 @@ g(0)=1,\quad g(1)=0,\quad g'(d)\le 0.
 H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\langle x\rangle_{+} = \frac{1}{2}(x + |x|), \quad
-\langle x\rangle_{-} = \frac{1}{2}(x - |x|), \quad
-H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
-\]
-```
-
 **各部分含义：**
 
 - \(\langle x\rangle_+\)：取 \(x\) 的正部分。
@@ -132,15 +105,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \pmb{\epsilon} = \sum_{\alpha} \epsilon_{\alpha} \mathbf{M}_{\alpha}, \quad
 \mathbf{M}_{\alpha} = \pmb{n}_{\alpha} \otimes \pmb{n}_{\alpha},
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\pmb{\epsilon} = \sum_{\alpha} \epsilon_{\alpha} \mathbf{M}_{\alpha}, \quad
-\mathbf{M}_{\alpha} = \pmb{n}_{\alpha} \otimes \pmb{n}_{\alpha},
-\]
-```
 
 **各部分含义：**
 
@@ -169,15 +133,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \pmb{\epsilon}^{-} = \sum_{\alpha} \langle \epsilon_{\alpha}\rangle_{-} \mathbf{M}_{\alpha}.
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\pmb{\epsilon}^{+} = \sum_{\alpha} \langle \epsilon_{\alpha}\rangle_{+} \mathbf{M}_{\alpha}, \quad
-\pmb{\epsilon}^{-} = \sum_{\alpha} \langle \epsilon_{\alpha}\rangle_{-} \mathbf{M}_{\alpha}.
-\]
-```
-
 **各部分含义：**
 
 - \(\pmb\epsilon^+\)：由正主应变组装的“拉伸应变部分”。
@@ -204,15 +159,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \psi^{+}(\pmb{\epsilon}) = \frac{1}{2}\lambda \langle \mathrm{tr}\pmb{\epsilon}\rangle_{+}^{2} + \mu \, \pmb{\epsilon}^{+} : \pmb{\epsilon}^{+}, \quad
 \psi^{-}(\pmb{\epsilon}) = \frac{1}{2} \lambda \langle \mathrm{tr}\pmb{\epsilon}\rangle_{-}^{2} + \mu \, \pmb{\epsilon}^{-} : \pmb{\epsilon}^{-},
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\psi^{+}(\pmb{\epsilon}) = \frac{1}{2}\lambda \langle \mathrm{tr}\pmb{\epsilon}\rangle_{+}^{2} + \mu \, \pmb{\epsilon}^{+} : \pmb{\epsilon}^{+}, \quad
-\psi^{-}(\pmb{\epsilon}) = \frac{1}{2} \lambda \langle \mathrm{tr}\pmb{\epsilon}\rangle_{-}^{2} + \mu \, \pmb{\epsilon}^{-} : \pmb{\epsilon}^{-},
-\]
-```
 
 **各部分含义：**
 
@@ -245,16 +191,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 = [g(d) + k]\pmb{\sigma}^{+} + \pmb{\sigma}^{-},
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\pmb{\sigma} = \frac{\partial\psi(\pmb{\epsilon}(\pmb{u}),d)}{\partial \pmb{\epsilon}}
-= [g(d) + k]\frac{\partial\psi^{+}(\pmb{\epsilon})}{\partial \pmb{\epsilon}} + \frac{\partial\psi^{-}(\pmb{\epsilon})}{\partial \pmb{\epsilon}}
-= [g(d) + k]\pmb{\sigma}^{+} + \pmb{\sigma}^{-},
-\]
-```
-
 **各部分含义：**
 
 - \(\sigma\)：Cauchy 应力（小变形下可直接由能量对应变导出）。
@@ -282,15 +218,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \pmb{\sigma}^{+} = \lambda \langle \mathrm{tr}\pmb{\epsilon} \rangle_{+}\mathbf{I} + 2\mu \, \pmb{\epsilon}^{+}, \quad
 \pmb{\sigma}^{-} = \lambda \langle \mathrm{tr}\pmb{\epsilon} \rangle_{-}\mathbf{I} + 2\mu \, \pmb{\epsilon}^{-}.
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\pmb{\sigma}^{+} = \lambda \langle \mathrm{tr}\pmb{\epsilon} \rangle_{+}\mathbf{I} + 2\mu \, \pmb{\epsilon}^{+}, \quad
-\pmb{\sigma}^{-} = \lambda \langle \mathrm{tr}\pmb{\epsilon} \rangle_{-}\mathbf{I} + 2\mu \, \pmb{\epsilon}^{-}.
-\]
-```
 
 **各部分含义：**
 
@@ -325,17 +252,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 + \left[\lambda H(-\mathrm{tr}\pmb{\epsilon})\mathbf{I}\otimes \mathbf{I} + 2\mu \mathbb{P}^{-}\right].
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\frac{\partial \pmb{\sigma}}{\partial \pmb{\epsilon}}
-= [g(d) + k]\frac{\partial \pmb{\sigma}^{+}}{\partial \pmb{\epsilon}} + \frac{\partial \pmb{\sigma}^{-}}{\partial \pmb{\epsilon}}
-= [g(d) + k]\left[\lambda H(\mathrm{tr}\pmb{\epsilon})\mathbf{I}\otimes \mathbf{I} + 2\mu \mathbb{P}^{+}\right]
-+ \left[\lambda H(-\mathrm{tr}\pmb{\epsilon})\mathbf{I}\otimes \mathbf{I} + 2\mu \mathbb{P}^{-}\right].
-\]
-```
-
 **各部分含义：**
 
 - \(\partial\sigma/\partial\epsilon\)：四阶切线刚度（consistent tangent）。
@@ -366,15 +282,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \mathbb{P}^{-} = \frac{\partial \pmb{\epsilon}^{-}}{\partial \pmb{\epsilon}},
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\mathbb{P}^{+} = \frac{\partial \pmb{\epsilon}^{+}}{\partial \pmb{\epsilon}}, \quad
-\mathbb{P}^{-} = \frac{\partial \pmb{\epsilon}^{-}}{\partial \pmb{\epsilon}},
-\]
-```
-
 **各部分含义：**
 
 - \(\mathbb P^\pm\)：四阶张量，描述“总应变微扰”如何投影到“正/负应变部分微扰”。
@@ -401,19 +308,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 &= (\nabla^{(s)}\delta \pmb {u},\pmb {\sigma}) - (\delta \pmb {u},\pmb {b}) - (\delta \pmb {u},\pmb{t})_{\Gamma_{t}} + (\delta d,\frac{g_{c}}{l} d) + (\nabla \delta d,g_{c}l\nabla d) + (\delta d,g^{\prime}(d)\psi^{+}(\pmb{\epsilon})).
 \end{array} \quad (7)
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\begin{array}{rl}
-\delta \Pi (\pmb {u},d) &= D_{(\delta \pmb {u},\delta d)}\Pi (\pmb {u},d) = \left.\frac{\mathrm{d}}{\mathrm{d}\epsilon}\right|_{\epsilon = 0}\Pi (\pmb {u} + \epsilon \delta \pmb {u},d + \epsilon \delta d) \\
-&= \int_{\Omega}\left(\frac{\partial\psi(\pmb{\epsilon}(\pmb{u}),d)}{\partial \pmb{\epsilon}}:\pmb{\epsilon}(\delta \pmb {u}) + \frac{\partial\psi(\pmb{\epsilon}(\pmb{u}),d)}{\partial d}\delta d\right)\mathrm{d}\Omega \\
-&\quad +\int_{\Omega}\frac{g_{c}}{l}\left(d\delta d + l^{2}\nabla d\cdot \nabla \delta d\right)\mathrm{d}\Omega -\int_{\Omega}\pmb {b}\cdot \delta \pmb {u}\mathrm{d}\Omega -\int_{\partial \Omega}\pmb {t}\cdot \delta \pmb {u}\mathrm{d}\Gamma \\
-&= (\nabla^{(s)}\delta \pmb {u},\pmb {\sigma}) - (\delta \pmb {u},\pmb {b}) - (\delta \pmb {u},\pmb{t})_{\Gamma_{t}} + (\delta d,\frac{g_{c}}{l} d) + (\nabla \delta d,g_{c}l\nabla d) + (\delta d,g^{\prime}(d)\psi^{+}(\pmb{\epsilon})).
-\end{array} \quad (7)
-\]
-```
 
 **各部分含义：**
 
@@ -452,17 +346,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \end{array} \right.
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\left\{ \begin{array}{ll}
- r_{\pmb{u}}(\pmb{u},d) = (\nabla^{(s)}\delta \pmb{u},\pmb{\sigma}) - (\delta \pmb{u},\pmb{b}) - (\delta \pmb{u},\pmb{t})_{\Gamma_{t}} = 0, \\
- r_{d}(\pmb{u},d) = (\delta d,\frac{g_{c}}{l} d) + (\nabla \delta d,g_{c}l\nabla d) + (\delta d,g^{\prime}(d)\psi^{+}(\pmb{\epsilon})) = 0,
-\end{array} \right.
-\]
-```
-
 **各部分含义：**
 
 - \(r_u\)：位移方程残量。
@@ -491,14 +374,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \pmb {u} = \pmb{N}_{u_{A}}\pmb{u}_{A}, \quad \text{and} \quad d = N_{d_{A}}d_{A}.
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\pmb {u} = \pmb{N}_{u_{A}}\pmb{u}_{A}, \quad \text{and} \quad d = N_{d_{A}}d_{A}.
-\]
-```
-
 **各部分含义：**
 
 - \(\pmb N_{u_A}\)：位移场向量形函数矩阵。
@@ -521,14 +396,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 \[
 \delta \pmb {u} = \pmb{N}_{u_{A}}\delta \pmb{u}_{A}, \quad \text{and} \quad \delta d = N_{d_{A}}\delta d_{A},
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\delta \pmb {u} = \pmb{N}_{u_{A}}\delta \pmb{u}_{A}, \quad \text{and} \quad \delta d = N_{d_{A}}\delta d_{A},
-\]
-```
 
 **各部分含义：**
 
@@ -553,18 +420,6 @@ H(x) = \begin{cases} 1 & x \geq 0, \\ 0 & x < 0. \end{cases}
 &-\int_{\Omega}\pmb {b}\cdot (\pmb {N}_{u_{A}}\pmb {u}_{A})\mathrm{d}\Omega -\int_{\partial \Omega}\pmb {t}\cdot (\pmb {N}_{u_{A}}\pmb {u}_{A})\mathrm{d}\Gamma,
 \end{array} \quad (8)
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\begin{array}{rl}
-\Pi (\pmb {u}_{A},d_{A}) = &\int_{\Omega}\psi \left(\pmb{\epsilon}(\pmb {N}_{u_{A}}\pmb {u}_{A}),N_{d_{A}}d_{A}\right)\mathrm{d}\Omega \\
-&+\int_{\Omega}\frac{g_{c}}{2l}\left((N_{d_{A}}d_{A})^{2} + l^{2}(\nabla N_{d_{A}}d_{A})\cdot (\nabla N_{d_{A}}d_{A})\right)\mathrm{d}\Omega \\
-&-\int_{\Omega}\pmb {b}\cdot (\pmb {N}_{u_{A}}\pmb {u}_{A})\mathrm{d}\Omega -\int_{\partial \Omega}\pmb {t}\cdot (\pmb {N}_{u_{A}}\pmb {u}_{A})\mathrm{d}\Gamma,
-\end{array} \quad (8)
-\]
-```
 
 **各部分含义：**
 
@@ -593,18 +448,6 @@ r_{d_{A}} = \frac{\partial\Pi}{\partial d_{A}} = \left(N_{d_{A}},\frac{g_{c}}{l}
 \end{array} \quad (9)
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-\begin{array}{rl}
-\pmb{r} = \nabla \Pi = (r_{\pmb{u}},r_{d})^{\mathrm{T}},\\
-r_{\pmb{u}_{A}} = \frac{\partial\Pi}{\partial \pmb{u}_{A}} = \left(\nabla^{(s)}\pmb{N}_{u_{A}},\pmb{\sigma}\right) - \left(\pmb{N}_{u_{A}},\pmb{b}\right) - \left(\pmb{N}_{u_{A}},\pmb{t}\right)_{\Gamma_{t}},\\
-r_{d_{A}} = \frac{\partial\Pi}{\partial d_{A}} = \left(N_{d_{A}},\frac{g_{c}}{l} d + g^{\prime}(d)\psi^{+}\right) + (\nabla N_{d_{A}},g_{c}l\nabla d).
-\end{array} \quad (9)
-\]
-```
-
 **各部分含义：**
 
 - \(\mathbf r\)：离散残量向量（优化中即目标函数梯度）。
@@ -630,14 +473,6 @@ r_{d_{A}} = \frac{\partial\Pi}{\partial d_{A}} = \left(N_{d_{A}},\frac{g_{c}}{l}
 \[
 \mathbf{K} = \nabla^{2}\Pi = \left[ \begin{array}{ll}\mathbf{K}_{uu} & \mathbf{K}_{ud}\\ \mathbf{K}_{du} & \mathbf{K}_{dd} \end{array} \right],
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\mathbf{K} = \nabla^{2}\Pi = \left[ \begin{array}{ll}\mathbf{K}_{uu} & \mathbf{K}_{ud}\\ \mathbf{K}_{du} & \mathbf{K}_{dd} \end{array} \right],
-\]
-```
 
 **各部分含义：**
 
@@ -666,19 +501,6 @@ r_{d_{A}} = \frac{\partial\Pi}{\partial d_{A}} = \left(N_{d_{A}},\frac{g_{c}}{l}
 \mathbf{K}_{d_{A}d_{B}} = \left(N_{d_{A}},\left(\frac{g_{c}}{l} +g^{\prime \prime}(d)\psi^{+}\right)N_{d_{B}}\right) + \left(\nabla N_{d_{A}},g_{c}l\nabla N_{d_{B}}\right).
 \end{array} \quad (10)
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\begin{array}{rl}
-\mathbf{K}_{u_{A}u_{B}} = \left(\nabla^{(s)}\pmb{N}_{u_{A}},\frac{\partial \pmb{\sigma}}{\partial \pmb{\epsilon}}:\nabla^{(s)}\pmb{N}_{u_{B}}\right),\qquad
-\mathbf{K}_{u_{A}d_{B}} = \left(\nabla^{(s)}\pmb{N}_{u_{A}},g^{\prime}(d)\pmb{\sigma}^{+}N_{d_{B}}\right),\\
-\mathbf{K}_{d_{A}u_{B}} = \left(N_{d_{A}},g^{\prime}(d)\pmb{\sigma}^{+}:\nabla^{(s)}\pmb{N}_{u_{B}}\right),\qquad
-\mathbf{K}_{d_{A}d_{B}} = \left(N_{d_{A}},\left(\frac{g_{c}}{l} +g^{\prime \prime}(d)\psi^{+}\right)N_{d_{B}}\right) + \left(\nabla N_{d_{A}},g_{c}l\nabla N_{d_{B}}\right).
-\end{array} \quad (10)
-\]
-```
 
 **各部分含义：**
 
@@ -716,14 +538,6 @@ r_{d_{A}} = \frac{\partial\Pi}{\partial d_{A}} = \left(N_{d_{A}},\frac{g_{c}}{l}
 d_A^{(n)}\leq d_A\leq 1,
 \]
 
-**LaTeX 代码：**
-
-```tex
-\[
-d_A^{(n)}\leq d_A\leq 1,
-\]
-```
-
 **各部分含义：**
 
 - \(d_A^{(n)}\)：上一步（已收敛）损伤值，当前步已知。
@@ -751,14 +565,6 @@ d_A^{(n)}\leq d_A\leq 1,
 \[
 \hat{\mathbf{K}} = \left[ \begin{array}{cc}\mathbf{K}_{uu} & \mathbf{0}\\ \mathbf{0} & \mathbf{K}_{dd} \end{array} \right], \quad (11)
 \]
-
-**LaTeX 代码：**
-
-```tex
-\[
-\hat{\mathbf{K}} = \left[ \begin{array}{cc}\mathbf{K}_{uu} & \mathbf{0}\\ \mathbf{0} & \mathbf{K}_{dd} \end{array} \right], \quad (11)
-\]
-```
 
 **各部分含义：**
 
